@@ -1,0 +1,22 @@
+#!/usr/bin/python3
+
+import sys
+import requests
+import bs4
+
+
+def parser(html, parsefor ):
+    soup = bs4.BeautifulSoup(html, 'html.parser')
+    result = soup.find_all(parsefor)
+    return result
+
+
+url = 'https://techterms.com/search'
+for arg in sys.argv[1:]:
+    params = {'term': arg}
+    print("Looking up term: " + arg + "\n")
+    req = requests.post(url=url, params=params).text
+    new_source = parser(req, 'p')
+    for i in new_source:
+        print(i.text)
+exit(0)
