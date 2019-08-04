@@ -1,0 +1,23 @@
+#!/usr/bin/python3
+#import modules
+import sys #needed for stdin,stderr,stdout
+import requests #needed to make POST requests
+import bs4 #Beautiful Soup ver.4 great for parsing html
+
+#define function parser with parameters html, and parsefor 
+def parser(html, parsefor ):
+    soup = bs4.BeautifulSoup(html, 'html.parser')
+    result = soup.find_all(parsefor)
+    return result
+
+#For this program we are utilizing https://techterms.com/ please support them by visiting their site or donations. Thank you.
+url = 'https://techterms.com/search'
+for arg in sys.argv[1:]: #stdin gets saved to sys.argv 
+    params = {'term': arg}
+    print("Looking up term: " + arg + "\n")
+    req = requests.post(url=url, params=params).text #make post request to techterms and get source code
+    new_source = parser(req, 'p') # perform search for <p> tag
+    """since there several <p> tags so we have to print each individually whilst removing html leaving only the desired text"""
+    for i in new_source: 
+        print(i.text)
+exit(0)
