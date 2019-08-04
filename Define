@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+"""This script is a very simple tool to help anyone learn or expand your technical vocabulary"""
 #import modules
 import sys #needed for stdin,stderr,stdout
 import requests #needed to make POST requests
